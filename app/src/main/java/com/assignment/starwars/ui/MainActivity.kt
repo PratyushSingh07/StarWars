@@ -1,4 +1,4 @@
-package com.assignment.starwars
+package com.assignment.starwars.ui
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -12,7 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.assignment.starwars.databinding.ActivityMainBinding
 import com.assignment.starwars.ui.theme.StarWarsTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
