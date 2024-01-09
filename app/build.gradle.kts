@@ -88,4 +88,7 @@ dependencies {
     // Lifecycle
     implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+
+    // Pagination
+    implementation ("androidx.paging:paging-runtime:3.1.1")
 }

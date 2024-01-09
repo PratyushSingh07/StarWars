@@ -25,7 +25,7 @@ class PeopleViewModel @Inject constructor(private val peopleRepositoryImpl: Peop
             peopleRepositoryImpl.getPeople().catch {
                 _peopleUiState.value = PeopleUiState.Error(it)
             }.collect {
-                _peopleUiState.value = PeopleUiState.Response(it.results)
+                _peopleUiState.value = PeopleUiState.Response(it)
             }
         }
     }

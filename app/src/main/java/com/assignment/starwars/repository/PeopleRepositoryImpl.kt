@@ -1,18 +1,22 @@
 package com.assignment.starwars.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.assignment.starwars.api.StarWarsApiService
-import com.assignment.starwars.models.PeopleResponse
+import com.assignment.starwars.models.Person
+import com.assignment.starwars.utils.PeoplePagingSource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class PeopleRepositoryImpl @Inject constructor(private val starWarsApiService: StarWarsApiService) :
     PeopleRepository {
 
-    override fun getPeople(): Flow<PeopleResponse> {
-        return flow {
-            emit(starWarsApiService.getPeople())
-        }
+    override suspend fun getPeople(): Flow<PagingData<Person>> {
+        return Pager(
+            config = PagingConfig(pageSize = 10, maxSize = 100),
+            pagingSourceFactory = { PeoplePagingSource(starWarsApiService) }
+        ).flow
     }
 
 }

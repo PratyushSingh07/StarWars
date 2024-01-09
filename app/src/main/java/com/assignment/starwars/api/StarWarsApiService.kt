@@ -7,11 +7,12 @@ import com.assignment.starwars.models.PlanetResponse
 import com.assignment.starwars.models.StarShipResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface StarWarsApiService {
 
     @GET(ApiEndPoints.PEOPLE)
-    suspend fun getPeople(): PeopleResponse
+    suspend fun getPeople(@Query("page")page: Int): PeopleResponse
 
     @GET(ApiEndPoints.STARSHIPS)
     suspend fun getStarships(): StarShipResponse

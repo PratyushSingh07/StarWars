@@ -1,10 +1,11 @@
 package com.assignment.starwars.repository
 
-import com.assignment.starwars.models.PeopleResponse
+import androidx.paging.PagingData
+import com.assignment.starwars.models.Person
 import kotlinx.coroutines.flow.Flow
 
 interface PeopleRepository {
 
-    fun getPeople(): Flow<PeopleResponse>
+    suspend fun getPeople(): Flow<PagingData<Person>>
 
 }
