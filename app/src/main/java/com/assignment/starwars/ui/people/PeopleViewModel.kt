@@ -1,7 +1,8 @@
-package com.assignment.starwars.ui
+package com.assignment.starwars.ui.people
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.assignment.starwars.repository.PeopleRepository
 import com.assignment.starwars.ui.state.PeopleUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +23,7 @@ class PeopleViewModel @Inject constructor(private val peopleRepositoryImpl: Peop
     fun getPeople() {
         viewModelScope.launch(Dispatchers.IO) {
             _peopleUiState.value = PeopleUiState.Loading
-            peopleRepositoryImpl.getPeople().catch {
+            peopleRepositoryImpl.getPeople().cachedIn(viewModelScope).catch {
                 _peopleUiState.value = PeopleUiState.Error(it)
             }.collect {
                 _peopleUiState.value = PeopleUiState.Response(it)

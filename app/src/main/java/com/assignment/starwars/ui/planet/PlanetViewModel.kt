@@ -1,4 +1,4 @@
-package com.assignment.starwars.ui
+package com.assignment.starwars.ui.planet
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

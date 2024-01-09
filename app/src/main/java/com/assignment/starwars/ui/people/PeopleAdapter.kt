@@ -1,4 +1,4 @@
-package com.assignment.starwars.ui
+package com.assignment.starwars.ui.people
 
 import android.view.LayoutInflater
 import android.view.View
