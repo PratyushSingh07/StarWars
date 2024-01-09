@@ -1,4 +1,4 @@
-package com.assignment.starwars.ui
+package com.assignment.starwars.ui.state
 
 import com.assignment.starwars.models.Person
 

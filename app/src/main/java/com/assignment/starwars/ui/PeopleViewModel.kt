@@ -3,6 +3,7 @@ package com.assignment.starwars.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.assignment.starwars.repository.PeopleRepository
+import com.assignment.starwars.ui.state.PeopleUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
