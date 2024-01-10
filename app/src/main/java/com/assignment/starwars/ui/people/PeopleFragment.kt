@@ -7,7 +7,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -18,6 +17,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.assignment.starwars.R
 import com.assignment.starwars.databinding.FragmentPeopleBinding
+import com.assignment.starwars.ui.film.FilmFragment
 import com.assignment.starwars.ui.filter.BottomSheetFragment
 import com.assignment.starwars.ui.state.PeopleUiState
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +38,16 @@ class PeopleFragment : Fragment() {
     ): View {
         _binding = FragmentPeopleBinding.inflate(inflater, container, false)
         adapter = PeopleAdapter {
-            Toast.makeText(requireActivity(), "CLICKED", Toast.LENGTH_SHORT).show()
+            val bundle = Bundle()
+            bundle.putStringArrayList("filmUrls", it.films)
+
+            val filmsFragment = FilmFragment()
+            filmsFragment.arguments = bundle
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment_activity_dashboard, filmsFragment)
+                .addToBackStack(null)
+                .commit()
         }
 
         binding.rv.layoutManager = GridLayoutManager(requireActivity(), 2)
@@ -81,7 +90,10 @@ class PeopleFragment : Fragment() {
                 return when (menuItem.itemId) {
                     R.id.filters -> {
                         val bottomSheetFragment = BottomSheetFragment()
-                        bottomSheetFragment.show((activity as FragmentActivity).supportFragmentManager,"")
+                        bottomSheetFragment.show(
+                            (activity as FragmentActivity).supportFragmentManager,
+                            ""
+                        )
                         true
                     }
 

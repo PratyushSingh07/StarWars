@@ -9,7 +9,7 @@ data class Person(
     val created: String,
     val edited: String,
     val eye_color: String,
-    val films: List<String>,
+    val films: ArrayList<String>,
     val gender: String,
     val hair_color: String,
     val height: String,
