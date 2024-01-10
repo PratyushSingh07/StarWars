@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.assignment.starwars.databinding.FragmentPeopleBinding
 import com.assignment.starwars.ui.state.PeopleUiState
@@ -29,9 +30,9 @@ class PeopleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPeopleBinding.inflate(inflater,container,false)
+        _binding = FragmentPeopleBinding.inflate(inflater, container, false)
         adapter = PeopleAdapter()
-        binding.rv.layoutManager = LinearLayoutManager(requireActivity())
+        binding.rv.layoutManager = GridLayoutManager(requireActivity(),2)
         binding.rv.adapter = adapter
 
         return binding.root
@@ -47,15 +48,18 @@ class PeopleFragment : Fragment() {
                     when (it) {
                         is PeopleUiState.Initial -> {}
 
-                        is PeopleUiState.Error -> {}
+                        is PeopleUiState.Error -> {
+                            binding.progressBar.visibility = View.GONE
+                        }
 
                         is PeopleUiState.Response -> {
                             Log.d("FINAL", it.person.toString())
+                            binding.progressBar.visibility = View.GONE
                             adapter.submitData(it.person)
                         }
 
                         is PeopleUiState.Loading -> {
-                            print("Loading")
+                            binding.progressBar.visibility = View.VISIBLE
                         }
                     }
                 }
