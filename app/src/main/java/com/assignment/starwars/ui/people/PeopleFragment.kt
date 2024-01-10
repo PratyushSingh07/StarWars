@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -31,7 +32,9 @@ class PeopleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPeopleBinding.inflate(inflater, container, false)
-        adapter = PeopleAdapter()
+        adapter = PeopleAdapter {
+            Toast.makeText(requireActivity(),"CLICKED",Toast.LENGTH_SHORT).show()
+        }
         binding.rv.layoutManager = GridLayoutManager(requireActivity(),2)
         binding.rv.adapter = adapter
 
