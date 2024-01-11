@@ -1,5 +1,6 @@
 package com.assignment.starwars.ui.people
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -7,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -14,6 +16,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.PagingData
+import androidx.paging.filter
 import androidx.paging.map
 import androidx.recyclerview.widget.GridLayoutManager
 import com.assignment.starwars.R
@@ -22,11 +26,12 @@ import com.assignment.starwars.models.Person
 import com.assignment.starwars.models.PersonDB
 import com.assignment.starwars.ui.film.FilmFragment
 import com.assignment.starwars.ui.filter.BottomSheetFragment
-import com.assignment.starwars.ui.filter.SortOption
+import com.assignment.starwars.ui.filter.Options
 import com.assignment.starwars.ui.filter.SortOptionListener
 import com.assignment.starwars.ui.state.PeopleUiState
 import com.assignment.starwars.utils.Constants.personDBtoPerson
 import com.assignment.starwars.utils.Constants.personToPersonDB
+import com.assignment.starwars.utils.Constants.simplifyTimestamp
 import com.assignment.starwars.utils.Network.isConnected
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -39,6 +44,7 @@ class PeopleFragment : Fragment(), SortOptionListener {
 
     private val viewModel: PeopleViewModel by viewModels()
     private lateinit var adapter: PeopleAdapter
+    private var list: PagingData<Person>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,6 +99,7 @@ class PeopleFragment : Fragment(), SortOptionListener {
 
                         is PeopleUiState.Response -> {
                             binding.progressBar.visibility = View.GONE
+                            list = it.person
                             saveDb(adapter.snapshot().items)
                             adapter.submitData(it.person)
                         }
@@ -108,6 +115,7 @@ class PeopleFragment : Fragment(), SortOptionListener {
                 return when (menuItem.itemId) {
                     R.id.filters -> {
                         val bottomSheetFragment = BottomSheetFragment()
+                        bottomSheetFragment.setBottomSheetListener(this@PeopleFragment)
                         bottomSheetFragment.show(
                             (activity as FragmentActivity).supportFragmentManager,
                             ""
@@ -122,21 +130,45 @@ class PeopleFragment : Fragment(), SortOptionListener {
         })
     }
 
-    override fun onSortOptionSelected(option: SortOption) {
-        // Implement sorting logic based on the selected option (NAME, MALE, FEMALE)
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onSortOptionSelected(option: Options) {
         viewLifecycleOwner.lifecycleScope.launch {
             val currentData = adapter.snapshot().items
-            val sortedData = when (option) {
-                SortOption.NAME -> {
-                    currentData.sortedBy { it.name }
+            when (option) {
+                Options.NAME -> {
+                    val pg = PagingData.from(currentData.sortedBy { it.name })
+                    adapter.submitData(pg)
                 }
 
-                SortOption.MALE -> {
-                    currentData.sortedBy { it.gender }
+                Options.UPDATED -> {
+                    val pg = PagingData.from(currentData.sortedBy { simplifyTimestamp(it.edited) })
+                    adapter.submitData(pg)
                 }
-                SortOption.FEMALE ->{}
+
+                Options.CREATED -> {
+                    val pg = PagingData.from(currentData.sortedBy { simplifyTimestamp(it.created) })
+                    adapter.submitData(pg)
+                }
+
+                Options.HEIGHT -> {
+                    val pg = PagingData.from(currentData.sortedBy { it.height })
+                    adapter.submitData(pg)
+                }
+
+                Options.MASS -> {
+                    val pg = PagingData.from(currentData.sortedBy { it.mass })
+                    adapter.submitData(pg)
+                }
+
+                Options.MALE -> {
+                    list?.filter { it.gender == "male" }?.let { adapter.submitData(it) }
+                }
+
+                Options.FEMALE -> {
+                    list?.filter { it.gender == "female" }?.let { adapter.submitData(it) }
+                }
             }
-//            adapter.submitData(sortedData)
+
         }
     }
 

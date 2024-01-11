@@ -12,4 +12,6 @@
     <string name="mass">Mass</string>
     <string name="updated">Updated</string>
     <string name="created">Created</string>
+    <string name="male">Male</string>
+    <string name="unknown">Unknown</string>
 </resources>

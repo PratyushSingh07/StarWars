@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.FragmentActivity
 import com.assignment.starwars.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -14,36 +13,55 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class BottomSheetFragment : BottomSheetDialogFragment() {
 
     private var mBottomSheetBehavior: BottomSheetBehavior<*>? = null
+    private var listener: SortOptionListener? = null
+
+    fun setBottomSheetListener(listener: SortOptionListener) {
+        this.listener = listener
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         val view = View.inflate(context, R.layout.dialog_options, null)
         dialog.setContentView(view)
         mBottomSheetBehavior = BottomSheetBehavior.from(view.parent as View)
-        val sort = view.findViewById<TextView>(R.id.sort)
-        sort.setOnClickListener {
+
+
+        view.findViewById<TextView>(R.id.name).setOnClickListener {
             dismiss()
-            Toast.makeText(activity?.applicationContext, "SORT", Toast.LENGTH_SHORT).show()
-            onSortSelected()
+            listener?.onSortOptionSelected(Options.NAME)
         }
 
-        val filter = view.findViewById<TextView>(R.id.filter)
-        filter.setOnClickListener {
+        view.findViewById<TextView>(R.id.height).setOnClickListener {
             dismiss()
-            Toast.makeText(activity?.applicationContext, "FILTER", Toast.LENGTH_SHORT).show()
-            onFilterSelected()
+            Toast.makeText(activity?.applicationContext, "NAME", Toast.LENGTH_SHORT).show()
+            listener?.onSortOptionSelected(Options.HEIGHT)
+        }
+        view.findViewById<TextView>(R.id.mass).setOnClickListener {
+            dismiss()
+            listener?.onSortOptionSelected(Options.MASS)
+        }
+        view.findViewById<TextView>(R.id.created).setOnClickListener {
+            dismiss()
+            Toast.makeText(activity?.applicationContext, "NAME", Toast.LENGTH_SHORT).show()
+            listener?.onSortOptionSelected(Options.CREATED)
+        }
+        view.findViewById<TextView>(R.id.updated).setOnClickListener {
+            dismiss()
+            Toast.makeText(activity?.applicationContext, "NAME", Toast.LENGTH_SHORT).show()
+            listener?.onSortOptionSelected(Options.UPDATED)
+        }
+
+        view.findViewById<TextView>(R.id.male).setOnClickListener {
+            dismiss()
+            Toast.makeText(activity?.applicationContext, "NAME", Toast.LENGTH_SHORT).show()
+            listener?.onSortOptionSelected(Options.MALE)
+        }
+
+        view.findViewById<TextView>(R.id.female).setOnClickListener {
+            dismiss()
+            listener?.onSortOptionSelected(Options.FEMALE)
         }
         return dialog
-    }
-
-    private fun onSortSelected() {
-        val sortBottomSheet = SortBottomSheet()
-        sortBottomSheet.show((activity as FragmentActivity).supportFragmentManager, "")
-    }
-
-    private fun onFilterSelected() {
-        val filterBottomSheet = FilterBottomSheet()
-        filterBottomSheet.show((activity as FragmentActivity).supportFragmentManager, "")
     }
 
 }
