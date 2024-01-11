@@ -10,10 +10,10 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:paddingBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:paddingBottom="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -29,9 +29,9 @@
                 app:tint="@color/white" />
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
                 <TextView
@@ -43,60 +43,66 @@
                     android:layout_marginEnd="10dp"
                     android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
                     android:drawableTint="@color/white"
+                    android:fontFamily="@font/poppins_medium"
                     android:text="@string/sort"
                     android:textColor="@color/white"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/name"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/poppins_light"
                         android:text="@string/name"
-                        android:textColor="@color/white"
+                        android:textColor="@color/grey"
                         android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/updated"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/updated"
-                        android:textSize="20sp"
-                        android:textColor="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp" />
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/poppins_light"
+                        android:text="@string/updated"
+                        android:textColor="@color/grey"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/created"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
                         android:drawableTint="@color/white"
+                        android:fontFamily="@font/poppins_light"
                         android:text="@string/created"
+                        android:textColor="@color/grey"
                         android:textSize="20sp"
-                        android:textColor="@color/white"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/height"
-                        android:layout_marginStart="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
                         android:drawableTint="@color/white"
+                        android:fontFamily="@font/poppins_light"
                         android:text="@string/height"
-                        android:textColor="@color/white"
+                        android:textColor="@color/grey"
                         android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
@@ -105,14 +111,15 @@
                         android:id="@+id/mass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
                         android:drawableTint="@color/white"
+                        android:fontFamily="@font/poppins_light"
                         android:text="@string/mass"
-                        android:textColor="@color/white"
+                        android:textColor="@color/grey"
                         android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent" />
 
                 </LinearLayout>
 
@@ -127,48 +134,42 @@
                 android:layout_marginEnd="10dp"
                 android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
                 android:drawableTint="@color/white"
+                android:fontFamily="@font/poppins_medium"
                 android:text="@string/filter"
                 android:textColor="@color/white"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/male"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/poppins_light"
                     android:text="@string/male"
-                    android:textColor="@color/white"
+                    android:textColor="@color/grey"
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/female"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/poppins_light"
                     android:text="@string/female"
-                    android:textSize="20sp"
-                    android:textColor="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp" />
-
-                <TextView
-                    android:id="@+id/unknown"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/unknown"
-                    android:textSize="20sp"
-                    android:textColor="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp" />
+                    android:textColor="@color/grey"
+                    android:textSize="20sp" />
 
             </LinearLayout>
         </LinearLayout>

@@ -12,10 +12,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.assignment.starwars.databinding.FragmentFilmBinding
 import com.assignment.starwars.models.FilmResponse
 import com.assignment.starwars.ui.state.FilmUiState
+import com.assignment.starwars.utils.Network.isConnected
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -38,7 +38,7 @@ class FilmFragment : Fragment() {
         _binding = FragmentFilmBinding.inflate(inflater, container, false)
         filmUrls = arguments?.getStringArrayList("filmUrls")
         adapter = FilmAdapter(mutableListOf())
-        binding.rvFilms.layoutManager = GridLayoutManager(requireActivity(),2)
+        binding.rvFilms.layoutManager = GridLayoutManager(requireActivity(), 2)
         binding.rvFilms.adapter = adapter
 
         if (filmUrls != null) {
@@ -49,7 +49,7 @@ class FilmFragment : Fragment() {
             return ComposeView(requireContext()).apply {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
                 setContent {
-                    NoFilms()
+                    NoFilms(isOnline = isConnected(requireContext()))
                 }
             }
         }

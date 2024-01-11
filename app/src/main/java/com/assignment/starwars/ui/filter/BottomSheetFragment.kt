@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import com.assignment.starwars.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -33,7 +32,6 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
         view.findViewById<TextView>(R.id.height).setOnClickListener {
             dismiss()
-            Toast.makeText(activity?.applicationContext, "NAME", Toast.LENGTH_SHORT).show()
             listener?.onSortOptionSelected(Options.HEIGHT)
         }
         view.findViewById<TextView>(R.id.mass).setOnClickListener {
@@ -42,18 +40,15 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         }
         view.findViewById<TextView>(R.id.created).setOnClickListener {
             dismiss()
-            Toast.makeText(activity?.applicationContext, "NAME", Toast.LENGTH_SHORT).show()
             listener?.onSortOptionSelected(Options.CREATED)
         }
         view.findViewById<TextView>(R.id.updated).setOnClickListener {
             dismiss()
-            Toast.makeText(activity?.applicationContext, "NAME", Toast.LENGTH_SHORT).show()
             listener?.onSortOptionSelected(Options.UPDATED)
         }
 
         view.findViewById<TextView>(R.id.male).setOnClickListener {
             dismiss()
-            Toast.makeText(activity?.applicationContext, "NAME", Toast.LENGTH_SHORT).show()
             listener?.onSortOptionSelected(Options.MALE)
         }
 

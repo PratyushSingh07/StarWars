@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.assignment.starwars.models.PersonDB
 import com.assignment.starwars.repository.PeopleRepository
+import com.assignment.starwars.ui.filter.Options
 import com.assignment.starwars.ui.state.PeopleUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

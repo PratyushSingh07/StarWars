@@ -36,6 +36,8 @@ class PeopleAdapter(private val onItemClickListener: (Person) -> Unit) :
                 name.text = item.name
                 height.text = item.height
                 mass.text = item.mass
+                starships.text  = item.starships?.size.toString()
+                homeWorld.text = if(item.gender == "male")"M" else if(item.gender == "female") "F" else "-"
                 itemImage.setImageResource(
                     STAR_WARS_IAMGES[Random.nextInt(0, STAR_WARS_IAMGES.size)]
                 )

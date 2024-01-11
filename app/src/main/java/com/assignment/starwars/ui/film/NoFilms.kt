@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import com.assignment.starwars.R
 
 @Composable
-fun NoFilms() {
+fun NoFilms(isOnline: Boolean) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -31,7 +31,7 @@ fun NoFilms() {
             modifier = Modifier.padding(bottom = 8.dp)
         )
         Text(
-            text = stringResource(R.string.no_films_found),
+            text = if (isOnline) stringResource(id = R.string.no_films_found) else stringResource(R.string.no_internet),
             style = TextStyle(fontSize = 16.sp, color = Color.White)
         )
     }
@@ -40,5 +40,5 @@ fun NoFilms() {
 @Preview
 @Composable
 fun NoFilmsPreview() {
-    NoFilms()
+    NoFilms(false)
 }

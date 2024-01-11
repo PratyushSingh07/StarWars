@@ -85,6 +85,7 @@ class PeopleFragment : Fragment(), SortOptionListener {
                         is PeopleUiState.Initial -> {}
 
                         is PeopleUiState.ResponseOffline -> {
+                            binding.progressBar.visibility = View.GONE
                             val transform: (PersonDB) -> Person = { p -> personDBtoPerson(p) }
                             adapter.submitData(it.personDB.map(transform))
                         }
