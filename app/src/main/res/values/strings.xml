@@ -4,4 +4,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sort">Sort</string>
     <string name="filter">Filter</string>
+    <string name="hello">HELLO</string>
+    <string name="no_films_found">No Films Found</string>
+    <string name="name">Name</string>
+    <string name="female">Female</string>
+    <string name="height">Height</string>
+    <string name="mass">Mass</string>
+    <string name="updated">Updated</string>
+    <string name="created">Created</string>
 </resources>

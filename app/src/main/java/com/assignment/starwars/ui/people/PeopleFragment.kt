@@ -1,7 +1,6 @@
 package com.assignment.starwars.ui.people
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -23,6 +22,8 @@ import com.assignment.starwars.models.Person
 import com.assignment.starwars.models.PersonDB
 import com.assignment.starwars.ui.film.FilmFragment
 import com.assignment.starwars.ui.filter.BottomSheetFragment
+import com.assignment.starwars.ui.filter.SortOption
+import com.assignment.starwars.ui.filter.SortOptionListener
 import com.assignment.starwars.ui.state.PeopleUiState
 import com.assignment.starwars.utils.Constants.personDBtoPerson
 import com.assignment.starwars.utils.Constants.personToPersonDB
@@ -31,7 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PeopleFragment : Fragment() {
+class PeopleFragment : Fragment(), SortOptionListener {
 
     private var _binding: FragmentPeopleBinding? = null
     private val binding get() = _binding!!
@@ -78,10 +79,8 @@ class PeopleFragment : Fragment() {
                         is PeopleUiState.Initial -> {}
 
                         is PeopleUiState.ResponseOffline -> {
-                            Log.d("@@@@@@@@@", adapter.snapshot().items.toString())
                             val transform: (PersonDB) -> Person = { p -> personDBtoPerson(p) }
                             adapter.submitData(it.personDB.map(transform))
-//                            it.personDB.filter {  }
                         }
 
                         is PeopleUiState.Loading -> {
@@ -94,9 +93,7 @@ class PeopleFragment : Fragment() {
 
                         is PeopleUiState.Response -> {
                             binding.progressBar.visibility = View.GONE
-                            Log.d("ABOVE", "TRY")
                             saveDb(adapter.snapshot().items)
-//                            viewModel.getPeopleFromDatabase()
                             adapter.submitData(it.person)
                         }
                     }
@@ -125,9 +122,26 @@ class PeopleFragment : Fragment() {
         })
     }
 
+    override fun onSortOptionSelected(option: SortOption) {
+        // Implement sorting logic based on the selected option (NAME, MALE, FEMALE)
+        viewLifecycleOwner.lifecycleScope.launch {
+            val currentData = adapter.snapshot().items
+            val sortedData = when (option) {
+                SortOption.NAME -> {
+                    currentData.sortedBy { it.name }
+                }
+
+                SortOption.MALE -> {
+                    currentData.sortedBy { it.gender }
+                }
+                SortOption.FEMALE ->{}
+            }
+//            adapter.submitData(sortedData)
+        }
+    }
+
     private fun saveDb(list: List<Person>) {
         viewModel.savePeople(personToPersonDB(list))
     }
-
 
 }

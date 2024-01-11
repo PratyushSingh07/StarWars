@@ -1,12 +1,16 @@
 package com.assignment.starwars.utils
 
-import android.util.Log
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.assignment.starwars.R
 import com.assignment.starwars.models.Person
 import com.assignment.starwars.models.PersonDB
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 object Constants {
     const val BASE_URL = "https://swapi.dev/api/"
+
     val STAR_WARS_IAMGES = intArrayOf(
         R.drawable.luke,
         R.drawable.darth_vader,
@@ -45,7 +49,6 @@ object Constants {
                     mass = it.mass,
                     name = it.name,
                     gender = it.gender,
-//                    films = it.films
                     birth_year = it.birth_year,
                     edited = it.edited,
                     created = it.created
@@ -53,5 +56,12 @@ object Constants {
             )
         }
         return newArray
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun simplifyTimestamp(timestamp: String): String {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+        val dateTime = LocalDateTime.parse(timestamp, DateTimeFormatter.ISO_DATE_TIME)
+        return dateTime.format(formatter)
     }
 }

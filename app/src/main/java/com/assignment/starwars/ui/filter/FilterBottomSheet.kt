@@ -19,12 +19,12 @@ class FilterBottomSheet : BottomSheetDialogFragment() {
         dialog.setContentView(view)
         mBottomSheetBehavior = BottomSheetBehavior.from(view.parent as View)
 
-        view.findViewById<TextView>(R.id.updated).setOnClickListener {
-            Toast.makeText(requireContext(), "UPDATED", Toast.LENGTH_SHORT).show()
+        view.findViewById<TextView>(R.id.male).setOnClickListener {
+//            Toast.makeText(requireContext(), "UPDATED", Toast.LENGTH_SHORT).show()
         }
 
-        view.findViewById<TextView>(R.id.created).setOnClickListener {
-            Toast.makeText(requireContext(), "CREATED", Toast.LENGTH_SHORT).show()
+        view.findViewById<TextView>(R.id.female).setOnClickListener {
+//            Toast.makeText(requireContext(), "CREATED", Toast.LENGTH_SHORT).show()
         }
         return dialog
     }

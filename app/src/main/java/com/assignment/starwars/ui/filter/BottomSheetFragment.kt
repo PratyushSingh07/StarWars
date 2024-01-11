@@ -22,12 +22,14 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         mBottomSheetBehavior = BottomSheetBehavior.from(view.parent as View)
         val sort = view.findViewById<TextView>(R.id.sort)
         sort.setOnClickListener {
+            dismiss()
             Toast.makeText(activity?.applicationContext, "SORT", Toast.LENGTH_SHORT).show()
             onSortSelected()
         }
 
         val filter = view.findViewById<TextView>(R.id.filter)
         filter.setOnClickListener {
+            dismiss()
             Toast.makeText(activity?.applicationContext, "FILTER", Toast.LENGTH_SHORT).show()
             onFilterSelected()
         }
