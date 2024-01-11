@@ -1,6 +1,8 @@
 package com.assignment.starwars.di
 
 import com.assignment.starwars.api.StarWarsApiService
+import com.assignment.starwars.db.PersonDatabase
+import com.assignment.starwars.db.dao.PersonDao
 import com.assignment.starwars.repository.FilmRepository
 import com.assignment.starwars.repository.FilmRepositoryImpl
 import com.assignment.starwars.repository.PeopleRepository
@@ -21,8 +23,11 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesPeopleRepository(starWarsApiService: StarWarsApiService): PeopleRepository {
-        return PeopleRepositoryImpl(starWarsApiService)
+    fun providesPeopleRepository(
+        starWarsApiService: StarWarsApiService,
+        personDao: PersonDao
+    ): PeopleRepository {
+        return PeopleRepositoryImpl(starWarsApiService, personDao)
     }
 
     @Provides

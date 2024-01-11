@@ -3,6 +3,7 @@ package com.assignment.starwars.ui.people
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.assignment.starwars.models.PersonDB
 import com.assignment.starwars.repository.PeopleRepository
 import com.assignment.starwars.ui.state.PeopleUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,4 +32,20 @@ class PeopleViewModel @Inject constructor(private val peopleRepositoryImpl: Peop
         }
     }
 
+    fun savePeople(personDBList: List<PersonDB>) {
+        viewModelScope.launch {
+            peopleRepositoryImpl.saveOffline(personDBList)
+        }
+    }
+
+    fun getPeopleFromDatabase() {
+        viewModelScope.launch {
+            _peopleUiState.value = PeopleUiState.Loading
+            peopleRepositoryImpl.getOfflinePeople().cachedIn(viewModelScope).catch {
+                _peopleUiState.value = PeopleUiState.Error(it)
+            }.collect {
+                _peopleUiState.value = PeopleUiState.ResponseOffline(it)
+            }
+        }
+    }
 }

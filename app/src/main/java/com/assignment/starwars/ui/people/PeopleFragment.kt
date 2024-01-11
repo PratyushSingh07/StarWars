@@ -1,6 +1,7 @@
 package com.assignment.starwars.ui.people
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -14,12 +15,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.map
 import androidx.recyclerview.widget.GridLayoutManager
 import com.assignment.starwars.R
 import com.assignment.starwars.databinding.FragmentPeopleBinding
+import com.assignment.starwars.models.Person
+import com.assignment.starwars.models.PersonDB
 import com.assignment.starwars.ui.film.FilmFragment
 import com.assignment.starwars.ui.filter.BottomSheetFragment
 import com.assignment.starwars.ui.state.PeopleUiState
+import com.assignment.starwars.utils.Constants.personDBtoPerson
+import com.assignment.starwars.utils.Constants.personToPersonDB
+import com.assignment.starwars.utils.Network.isConnected
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -53,18 +60,33 @@ class PeopleFragment : Fragment() {
         binding.rv.layoutManager = GridLayoutManager(requireActivity(), 2)
         binding.rv.adapter = adapter
 
+        if (!isConnected(requireContext()))
+            viewModel.getPeopleFromDatabase()
+        else
+            viewModel.getPeople()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getPeople()
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.peopleUiState.collect {
                     when (it) {
                         is PeopleUiState.Initial -> {}
+
+                        is PeopleUiState.ResponseOffline -> {
+                            Log.d("@@@@@@@@@", adapter.snapshot().items.toString())
+                            val transform: (PersonDB) -> Person = { p -> personDBtoPerson(p) }
+                            adapter.submitData(it.personDB.map(transform))
+//                            it.personDB.filter {  }
+                        }
+
+                        is PeopleUiState.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
 
                         is PeopleUiState.Error -> {
                             binding.progressBar.visibility = View.GONE
@@ -72,11 +94,10 @@ class PeopleFragment : Fragment() {
 
                         is PeopleUiState.Response -> {
                             binding.progressBar.visibility = View.GONE
+                            Log.d("ABOVE", "TRY")
+                            saveDb(adapter.snapshot().items)
+//                            viewModel.getPeopleFromDatabase()
                             adapter.submitData(it.person)
-                        }
-
-                        is PeopleUiState.Loading -> {
-                            binding.progressBar.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -103,4 +124,10 @@ class PeopleFragment : Fragment() {
 
         })
     }
+
+    private fun saveDb(list: List<Person>) {
+        viewModel.savePeople(personToPersonDB(list))
+    }
+
+
 }
