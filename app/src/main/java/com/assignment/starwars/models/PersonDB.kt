@@ -14,13 +14,9 @@ data class PersonDB(
     val birth_year: String,
     val created: String,
     val edited: String,
-//    var films: ArrayList<String>? = null,
     val gender: String,
     val height: String,
     val homeworld: String,
     val mass: String,
     val name: String,
-//    val starships: List<String>,
-//    val vehicles: List<String>
-//    val films: ArrayList<String>
 ) : Parcelable

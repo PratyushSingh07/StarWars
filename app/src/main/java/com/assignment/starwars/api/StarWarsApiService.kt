@@ -24,10 +24,4 @@ interface StarWarsApiService {
 
     @GET
     suspend fun getFilms(@Url filmUrl: String): FilmResponse
-
-    @GET("{personUrl}")
-    suspend fun getPerson(@Path("personUrl") personUrl: String?): Person
-
-    @GET("{planetUrl}")
-    suspend fun getPlanet(@Path("planetUrl") planetUrl: String): Planet
 }
